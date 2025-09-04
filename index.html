@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications & Funding Flowchart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .box {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .main-box {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            min-height: 150px;
+        }
+        .category-box {
+            background: linear-gradient(135deg, #f59e0b, #facc15);
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        .details-box {
+            text-align: left;
+            background-color: #e5e7eb;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .details-box:hover {
+            background-color: #d1d5db;
+        }
+        .connector-line {
+            width: 2px;
+            background-color: #9ca3af;
+            height: 2rem;
+        }
+        .h-connector {
+            height: 2px;
+            background-color: #9ca3af;
+            width: 100%;
+        }
+        .flex-row-centered {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+        .details-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .details-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            max-height: 0;
+            opacity: 0;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .details-content.show {
+            max-height: 1000px; /* Large value to allow content to expand */
+            opacity: 1;
+        }
+        .branch-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 2rem;
+            width: 2px;
+            background-color: #9ca3af;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .detail-card {
+            background-color: #f0f4f8;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .detail-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .detail-wrapper {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .detail-wrapper:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: -1rem;
+            width: 2px;
+            height: calc(1rem + 10px);
+            background-color: #9ca3af;
+            transform: translateX(-50%);
+        }
+        .detail-wrapper:first-child:before {
+            height: 0;
+        }
+        .detail-branch-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 1rem;
+            width: 2px;
+            background-color: #9ca3af;
+            transform: translateX(-50%);
+        }
+        .detail-content-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            align-items: center;
+        }
+        .detail-card strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome Page -->
+    <div id="welcome-page" class="flex flex-col items-center justify-center h-screen w-full bg-gray-100 transition-opacity duration-500">
+        <h1 class="text-5xl font-extrabold text-blue-600 mb-6 text-center">
+            Welcome to Certifications & Funding
+        </h1>
+        <p class="text-xl text-gray-700 mb-8 text-center max-w-2xl">
+            Explore the essential certifications and funding options for PopLotus. Click below to see the comprehensive plan.
+        </p>
+        <button onclick="showFlowchart()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+            See the Plan
+        </button>
+    </div>
+
+    <!-- Flowchart Page (Hidden by default) -->
+    <div id="flowchart-page" class="hidden flowchart-container transition-opacity duration-500 opacity-0">
+        
+        <!-- Main Box -->
+        <div class="box main-box">
+            Certifications & Funding
+        </div>
+        <div class="connector-line"></div>
+        <div class="h-connector" style="width: 50%;"></div>
+        <div class="flex-row-centered w-full">
+            
+            <!-- Food & Compliance Section -->
+            <div class="section flex-1 min-w-[300px] max-w-[500px]">
+                <div class="box category-box">
+                    Food & Compliance Related
+                </div>
+                <div class="connector-line"></div>
+                
+                <div class="details-group">
+                    
+                    <!-- APEDA Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="apeda-details">
+                            <h4 class="font-semibold text-lg text-blue-800">APEDA</h4>
+                        </div>
+                        <div id="apeda-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li><strong>Business Identity Proof:</strong> Certificate of Incorporation / Partnership Deed / Proprietorship declaration / LLP Agreement</li>
+                                        <li><strong>PAN card</strong> of company/firm/individual</li>
+                                        <li><strong>Import Export Code (IEC)</strong> (issued by DGFT – mandatory for APEDA)</li>
+                                        <li><strong>Bank Details:</strong> Canceled cheque (with IFSC code & account number visible) and Bank Certificate (on official letterhead)</li>
+                                        <li><strong>Address Proof</strong> of Business Premises: Electricity bill / Rent agreement / Sale deed</li>
+                                        <li><strong>Contact Details</strong> of Authorized Person: Mobile number, email ID, photograph</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Timeline:</strong>
+                                    Registration certificate is generally issued within **7–10 working days** after successful submission & verification.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Costing:</strong>
+                                    One-time registration fee: **₹5,000 + GST (18%)**. No annual renewal; only modification charges if you change company details.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    Online via the official **APEDA website → apeda.gov.in**. Application is done through the DGFT / e-RCMC portal using your IEC number.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector-line h-8"></div>
+                    
+                    <!-- ISO Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="iso-details">
+                            <h4 class="font-semibold text-lg text-blue-800">ISO</h4>
+                        </div>
+                        <div id="iso-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>Company registration certificate (Partnership Deed, Incorporation Certificate, GST Certificate, etc.)</li>
+                                        <li>PAN card of the business</li>
+                                        <li>Address proof of office (electricity bill, rent agreement, or NOC from owner)</li>
+                                        <li>Organizational chart and list of employees</li>
+                                        <li>Company profile & scope of business</li>
+                                        <li>Quality Manual & Standard Operating Procedures (SOPs)</li>
+                                        <li>Proof of past audits (if applicable)</li>
+                                        <li>Purchase bills, sales bills, balance sheet (for relevant standards)</li>
+                                        <li>Training records of employees</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Timeline:</strong>
+                                    3 to 6 months with thorough preparation.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Costing:</strong>
+                                    ₹4,000–₹10,000 for ISO 9001. Specialized standards cost ₹15,000–₹50,000.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    Through accredited certification bodies (NABCB or IAF-accredited).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector-line h-8"></div>
+                    
+                    <!-- Trademark Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="trademark-details">
+                            <h4 class="font-semibold text-lg text-blue-800">Trademark</h4>
+                        </div>
+                        <div id="trademark-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>Applicant details: Name, Address, Nationality</li>
+                                        <li>Business registration proof (Partnership Deed, Certificate of Incorporation, MSME Certificate, GST)</li>
+                                        <li>Logo / Brand name (soft copy, if applicable)</li>
+                                        <li>Signed Power of Attorney (Form TM-48) if filed by agent/attorney</li>
+                                        <li>Identity proof of applicant (Aadhar, PAN, Passport, etc.)</li>
+                                        <li>Address proof of applicant (Electricity Bill, Driving License, etc.)</li>
+                                        <li>Class under which trademark is sought (Nice Classification list)</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Timeline:</strong>
+                                    Typically spans 12–18 months. Expedited processing can take as little as 3 months.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Costing:</strong>
+                                    Online filing fees are ₹4,500 (individuals) and ₹9,000 (companies) per class.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    Via the IP India portal.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector-line h-8"></div>
+                    
+                    <!-- GS1 India Certification Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="gs1-details">
+                            <h4 class="font-semibold text-lg text-blue-800">GS1 India Certification</h4>
+                        </div>
+                        <div id="gs1-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>PAN card of the company/owner</li>
+                                        <li>GST Registration Certificate</li>
+                                        <li>MSME/Udyam Registration (if applicable, for fee concession)</li>
+                                        <li>Incorporation Certificate / Partnership Deed / Shop & Establishment Certificate</li>
+                                        <li>Bank Certificate or cancelled cheque</li>
+                                        <li>Product list with categories</li>
+                                        <li>Contact details of authorized signatory</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Timeline:</strong>
+                                    Issued within 3–10 working days.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Costing:</strong>
+                                    Based on annual turnover. Example: Up to ₹1 crore, license fee is ₹3,000 with a ₹750 annual renewal.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    Online via the GS1 India “Get Barcodes” portal.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector-line h-8"></div>
+                    
+                    <!-- IEC Code Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="iec-details">
+                            <h4 class="font-semibold text-lg text-blue-800">IEC Code</h4>
+                        </div>
+                        <div id="iec-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>PAN card of individual/company/firm</li>
+                                        <li>Aadhaar card or Voter ID/Passport/Driving License of applicant</li>
+                                        <li>Incorporation Certificate / Partnership Deed / Trust Deed (depending on entity type)</li>
+                                        <li>Bank details: Cancelled cheque & Bank Certificate (ANF-2A format)</li>
+                                        <li>Address proof of business premises (Rent agreement, electricity bill, sale deed, etc.)</li>
+                                        <li>Digital Photograph of applicant (passport size, JPEG format)</li>
+                                        <li>Digital Signature Certificate (DSC) of applicant (Class III, for companies/LLPs)</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Timeline:</strong>
+                                    Issued within 10–15 days.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Costing:</strong>
+                                    Processing fee is ₹500. Annual updates are mandatory.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    Through the DGFT’s IEC Profile Management portal.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Funding Related Section -->
+            <div class="section flex-1 min-w-[300px] max-w-[500px]">
+                <div class="box category-box">
+                    Funding Related
+                </div>
+                <div class="connector-line"></div>
+                
+                <div class="details-group">
+                    
+                    <!-- Startup India Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="startup-india-details">
+                            <h4 class="font-semibold text-lg text-green-700">Startup India Seed Fund</h4>
+                        </div>
+                        <div id="startup-india-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    DPIIT-recognized startup; may need incubator endorsement.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Timeline:</strong>
+                                    Applications year-round; funds disbursed based on milestones.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    Via Startup India portal or incubator network.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Amount:</strong>
+                                    Grants up to ₹20-50 lakhs.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector-line h-8"></div>
+                    
+                    <!-- Other State Funds Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="state-funds-details">
+                            <h4 class="font-semibold text-lg text-green-700">Other State Seed Funds</h4>
+                        </div>
+                        <div id="state-funds-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Details:</strong>
+                                    Schemes available in states like J&K, Gujarat, and Rajasthan.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Amount:</strong>
+                                    Varies by state; for example, J&K offers up to ₹10 lakhs.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector-line h-8"></div>
+                    
+                    <!-- Mudra Loan Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="mudra-details">
+                            <h4 class="font-semibold text-lg text-purple-800">Mudra Loan</h4>
+                        </div>
+                        <div id="mudra-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    No collateral, no processing fees; for micro-units.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Timeline:</strong>
+                                    Typically shorter process.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    Banks, MUDRA-affiliated NBFCs.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Details:</strong>
+                                    Loans up to ₹20 lakhs for repeat borrowers; categories: Shishu, Kishor, Tarun.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector-line h-8"></div>
+                    
+                    <!-- Stand-Up India Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="standup-details">
+                            <h4 class="font-semibold text-lg text-purple-800">Stand-Up India</h4>
+                        </div>
+                        <div id="standup-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Requirements:</strong>
+                                    For SC/ST and women entrepreneurs who are starting a new ("greenfield") enterprise.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Loan Range:</strong>
+                                    The loan amount can range from ₹10 lakhs to ₹1 crore.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Where to Apply:</strong>
+                                    You can apply at participating banks that are part of the scheme.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="connector-line h-8"></div>
+
+                    <!-- Credit Guarantee Card -->
+                    <div class="card-container">
+                        <div class="box details-box" data-target="credit-guarantee-details">
+                            <h4 class="font-semibold text-lg text-purple-800">Credit Guarantee Schemes</h4>
+                        </div>
+                        <div id="credit-guarantee-details" class="details-content w-full relative">
+                            <div class="detail-content-group">
+                                <div class="detail-card">
+                                    <strong>Details:</strong>
+                                    These schemes enable MSMEs to get collateral-free credit. The government body acts as a guarantor for the loan.
+                                </div>
+                                <div class="detail-card">
+                                    <strong>Budget 2024 Scheme:</strong>
+                                    The Budget 2024 Scheme offers a guarantee of up to ₹100 crore and has also doubled the Mudra limit for repeat borrowers to ₹2 million.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function showFlowchart() {
+            const welcomePage = document.getElementById('welcome-page');
+            const flowchartPage = document.getElementById('flowchart-page');
+            
+            welcomePage.style.opacity = '0';
+            welcomePage.style.display = 'none';
+
+            flowchartPage.classList.remove('hidden');
+            flowchartPage.classList.add('flex');
+
+            setTimeout(() => {
+                flowchartPage.style.opacity = '1';
+            }, 10); // Small delay to allow display change to register before starting transition
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const boxes = document.querySelectorAll('.details-box');
+            boxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    const parentContainer = box.closest('.card-container');
+                    const targetContent = parentContainer.querySelector('.details-content');
+                    
+                    if (targetContent) {
+                        const isCurrentlyVisible = targetContent.classList.contains('show');
+                        
+                        // Close any other open details
+                        document.querySelectorAll('.details-content.show').forEach(openContent => {
+                            if (openContent !== targetContent) {
+                                openContent.classList.remove('show');
+                            }
+                        });
+                        
+                        // Toggle the clicked one
+                        targetContent.classList.toggle('show');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
